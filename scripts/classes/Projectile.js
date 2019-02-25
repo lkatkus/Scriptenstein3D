@@ -14,7 +14,7 @@ class Projectile {
             // this.y = this.y + this.speed;
 
             this.updateLocation();
-        }, 1000 / 60)
+        }, 1000 / 30)
     }
 
     updateLocation() {

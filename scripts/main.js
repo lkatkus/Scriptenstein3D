@@ -15,7 +15,10 @@ const MOVEMENT_KEYS = {
     ArrowDown: MOVEMENT_DIRECTION.down,
 }
 
+let CANVAS;
+let CONTEXT;
 let PLAYER;
+let LEVEL;
 let PROJECTILES_ARRAY = [];
 
 class Player {
@@ -76,12 +79,14 @@ class Player {
 
     draw() {
         updateDebugger.call(this);
-
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
         this.ctx.save();
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.rotation * Math.PI / 180);
-        this.ctx.fillRect(-25, -25, 50, 50);
+        this.ctx.fillStyle = 'grey';
+        this.ctx.fillRect(-15, -15, 30, 30);
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(12, -15, 3, 30);
         this.ctx.restore();
 
         if (PROJECTILES_ARRAY.length > 0) {
@@ -90,20 +95,25 @@ class Player {
             });
 
             PROJECTILES_ARRAY.map((projectile) => {
-                this.ctx.fillRect(projectile.x, projectile.y, 5, 5);
+                this.ctx.save();
+                this.ctx.translate(projectile.x, projectile.y);
+                this.ctx.fillStyle = 'red';
+                this.ctx.fillRect(-2.5, -2.5, 5, 5);
+                this.ctx.restore();
             })
         }
     }
 };
 
 function startGame() {
-    const canvas = document.getElementById('canvas-map');
-    const canvasContext = canvas.getContext('2d');
+    CANVAS = document.getElementById('canvas-map');
+    CONTEXT = CANVAS.getContext('2d');
 
-    canvas.width = window.innerWidth / 2;
-    canvas.height = window.innerHeight / 2;
+    CANVAS.width = LEVEL_LAYOUT[0].length * TILE_SIZE;
+    CANVAS.height = LEVEL_LAYOUT.length * TILE_SIZE;
 
-    PLAYER = new Player(canvas, canvasContext, 150, 150);
+    PLAYER = new Player(CANVAS, CONTEXT, CANVAS.width / 2, CANVAS.height / 2);
+    LEVEL = new Level(CANVAS, CONTEXT);
 
     document.addEventListener('keydown', () => {
         if (SHOOTING_KEY_CODES.includes(event.keyCode)) {
@@ -115,9 +125,11 @@ function startGame() {
         }
     });
 
-    setInterval(mainDraw, 1000 / 30);
+    setInterval( mainDraw, 1000 / 30);
 };
 
 function mainDraw() {
+    CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
+    LEVEL.draw();
     PLAYER.draw();
 };

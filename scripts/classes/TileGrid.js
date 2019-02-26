@@ -11,7 +11,7 @@ const LEVEL_LAYOUT = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-class Level {
+class Level {   
     constructor(canvas, canvasContext) {
         this.canvas = canvas;
         this.ctx = canvasContext;
@@ -33,5 +33,12 @@ class Level {
                 this.ctx.stroke();
             })
         });
+    }
+
+    getPlayerTile(x, y) {
+        const row = Math.floor(x / TILE_SIZE);
+        const col = Math.floor(y / TILE_SIZE);
+
+        return this.mappedGrid[row][col];
     }
 }

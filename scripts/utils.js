@@ -9,3 +9,13 @@ function updateDebugger() {
 function getRadiansFromAngle(angle) {
     return angle * Math.PI / 180;
 }
+
+function calculateCoordinatesAfterRotation(rotation, speed) {
+    const newX = Math.cos(getRadiansFromAngle(rotation)) * speed;
+    const newY = Math.sin(getRadiansFromAngle(rotation)) * speed;
+
+    return {
+        x: newX,
+        y: newY,
+    }
+}

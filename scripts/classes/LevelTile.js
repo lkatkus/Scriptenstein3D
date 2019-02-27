@@ -1,12 +1,16 @@
-const TILE_SIZE = 30;
+const TILE_SIZE = 70;
 
-class Tile {
+class LevelTile {
     constructor(row, col, type) {
-        this.x = row * TILE_SIZE;
-        this.y = col * TILE_SIZE;
+        this.x = col * TILE_SIZE;
+        this.y = row * TILE_SIZE;
+        this.row = row;
+        this.col = col;
         this.type = this.getBackground(type);
         this.width = TILE_SIZE;
         this.height = TILE_SIZE;
+
+        console.log(this.x, this.y);
     }
 
     getBackground(type) {

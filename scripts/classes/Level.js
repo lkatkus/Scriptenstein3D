@@ -16,15 +16,15 @@ class Level {
         this.canvas = canvas;
         this.ctx = canvasContext;
 
-        this.mappedGrid = LEVEL_LAYOUT.map((layoutRow, row) => {
+        this.tileContainer = LEVEL_LAYOUT.map((layoutRow, row) => {
             return layoutRow.map((type, col) => {
-                return new Tile(row, col, type)
+                return new LevelTile(row, col, type)
             })
         });
     }
 
     draw() {
-        this.mappedGrid.forEach((layoutRow) => {
+        this.tileContainer.forEach((layoutRow) => {
             layoutRow.forEach((tile) => {
                 this.ctx.fillStyle = tile.type;
                 this.ctx.fillRect(tile.x, tile.y, tile.width, tile.height);
@@ -35,10 +35,14 @@ class Level {
         });
     }
 
-    getPlayerTile(x, y) {
+    getTileByCoordinates(x, y) {
         const row = Math.floor(x / TILE_SIZE);
         const col = Math.floor(y / TILE_SIZE);
 
-        return this.mappedGrid[row][col];
+        return this.tileContainer[row][col];
+    }
+
+    getTileByRowCol(row, col) {
+        return this.tileContainer[row][col];
     }
 }

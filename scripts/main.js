@@ -19,7 +19,11 @@ let CANVAS;
 let CONTEXT;
 let PLAYER;
 let LEVEL;
+let RAY_CASTER;
 let PROJECTILES_ARRAY = [];
+
+const SPAWN_X = 315;
+const SPAWN_Y = 315;
 
 class Player {
     constructor(canvas, canvasContext, x, y) {
@@ -29,18 +33,30 @@ class Player {
         this.x = x;
         this.y = y;
         this.rotation = 0;
+        this.currentTile = LEVEL.getTileByCoordinates(x, y);
         
         this.movementSpeed = 10;
-        this.rotationSpeed = 10;
+        this.rotationSpeed = 2;
     }
 
     move(direction) {
+        this.currentTile = LEVEL.getTileByCoordinates(this.x, this.y);
+
         if (direction === MOVEMENT_DIRECTION.left || direction === MOVEMENT_DIRECTION.right) {
             this.rotate(direction);
         }
 
         if (direction === MOVEMENT_DIRECTION.up || direction === MOVEMENT_DIRECTION.down) {
-            this.getCoordinatesAfterRotation(direction);
+            const newCoordinates = calculateCoordinatesAfterRotation(
+                this.rotation,
+                this.movementSpeed
+            );
+
+            this.x = this.x + newCoordinates.x;
+            this.y = this.y + newCoordinates.y;
+
+            RAY_CASTER.x = this.x;
+            RAY_CASTER.y = this.y;
         }
 
         this.draw();
@@ -50,43 +66,59 @@ class Player {
         if (direction === MOVEMENT_DIRECTION.right) {
             const newRotation = this.rotation + (this.rotationSpeed);
 
-            this.rotation = newRotation < 360 ? newRotation : newRotation - 360;
+            this.rotation = newRotation < 180
+                ? newRotation
+                : newRotation - 360;
+
+            RAY_CASTER.rotation = this.rotation;
         } else {
             const newRotation = this.rotation + (this.rotationSpeed * -1);
             
-            this.rotation = newRotation > -360 ? newRotation : newRotation + 360;
+            this.rotation = newRotation > -180
+                ? newRotation
+                : newRotation + 360;
+
+            RAY_CASTER.rotation = this.rotation;
         }
     }
 
     shoot() {
-        const projectile = new Projectile(this.x, this.y, this.rotation, 20);
+        console.log(this);
+
+        // const projectile = new Projectile(this.x, this.y, this.rotation, 20);
         
-        PROJECTILES_ARRAY.push(projectile);
+        // PROJECTILES_ARRAY.push(projectile);
     }
 
-    getCoordinatesAfterRotation(direction) {
-        const newX = Math.cos(getRadiansFromAngle(this.rotation)) * this.movementSpeed;
-        const newY = Math.sin(getRadiansFromAngle(this.rotation)) * this.movementSpeed;
+    drawFieldOfView() {
+        const viewStart = calculateCoordinatesAfterRotation(
+            this.rotation - 45,
+            20,
+        );
 
-        if (direction === MOVEMENT_DIRECTION.up) {
-            this.x = this.x + newX;
-            this.y = this.y + newY;
-        } else {
-            this.x = this.x - newX;
-            this.y = this.y - newY;
-        }
+        const viewEnd = calculateCoordinatesAfterRotation(
+            this.rotation + 45,
+            20,
+        );
+
+        this.ctx.save();
+        this.ctx.translate(this.x, this.y);
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0);
+        this.ctx.lineTo(viewStart.x, viewStart.y);
+        this.ctx.moveTo(0, 0);
+        this.ctx.lineTo(viewEnd.x, viewEnd.y);
+        this.ctx.strokeStyle = 'red';
+        this.ctx.stroke();
+        this.ctx.restore();
     }
 
-    draw() {
-        updateDebugger.call(this);
-        
+    draw() {      
         this.ctx.save();
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.rotation * Math.PI / 180);
         this.ctx.fillStyle = 'grey';
-        this.ctx.fillRect(-15, -15, 30, 30);
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(12, -15, 3, 30);
+        this.ctx.fillRect(-5, -5, 10, 10);
         this.ctx.restore();
 
         if (PROJECTILES_ARRAY.length > 0) {
@@ -102,6 +134,8 @@ class Player {
                 this.ctx.restore();
             })
         }
+
+        updateDebugger.call(this);
     }
 };
 
@@ -112,8 +146,9 @@ function startGame() {
     CANVAS.width = LEVEL_LAYOUT[0].length * TILE_SIZE;
     CANVAS.height = LEVEL_LAYOUT.length * TILE_SIZE;
 
-    PLAYER = new Player(CANVAS, CONTEXT, CANVAS.width / 2, CANVAS.height / 2);
     LEVEL = new Level(CANVAS, CONTEXT);
+    PLAYER = new Player(CANVAS, CONTEXT, SPAWN_X, SPAWN_Y);
+    RAY_CASTER = new RayCaster(CANVAS, CONTEXT, PLAYER.x, PLAYER.y, PLAYER.rotation, LEVEL);
 
     document.addEventListener('keydown', () => {
         if (SHOOTING_KEY_CODES.includes(event.keyCode)) {
@@ -125,11 +160,13 @@ function startGame() {
         }
     });
 
-    setInterval( mainDraw, 1000 / 30);
+    setInterval(mainDraw, 1000 / 30);
 };
 
 function mainDraw() {
     CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
     LEVEL.draw();
     PLAYER.draw();
+    RAY_CASTER.draw();
+    PLAYER.drawFieldOfView();
 };

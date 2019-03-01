@@ -9,8 +9,6 @@ class LevelTile {
         this.type = this.getBackground(type);
         this.width = TILE_SIZE;
         this.height = TILE_SIZE;
-
-        console.log(this.x, this.y);
     }
 
     getBackground(type) {

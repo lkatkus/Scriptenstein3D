@@ -19,7 +19,7 @@ class RayCaster {
         this.raysContainer.forEach((ray) => {
             const currentTile = this.level.getTileByCoordinates(ray.x, ray.y);
 
-            ray.draw(this.ctx, this.level, currentTile);
+            ray.cast(this.ctx, this.level, currentTile);
         });
     }
 }

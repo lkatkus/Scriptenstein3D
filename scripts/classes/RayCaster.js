@@ -11,7 +11,7 @@ class RayCaster {
         
         this.raysContainer = [];
 
-        for(let i = 0; i < fieldOfView / 2; i += 0.5) {
+        for(let i = fieldOfView / 2; i > 0; i -= 0.5) {
             this.raysContainer.push(new Ray(x, y, rotation, -i))
         }
 
@@ -37,6 +37,16 @@ class RayCaster {
     }
 
     drawField() {
+        this.ctx.fillStyle = 'rgba(50, 50, 50, 0.3)';
         
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.x, this.y);
+
+        this.raysContainer.forEach((ray) => {
+            this.ctx.lineTo(ray.collisionX, ray.collisionY);
+        });
+                
+        this.ctx.lineTo(this.x, this.y);
+        this.ctx.fill();
     }
 }

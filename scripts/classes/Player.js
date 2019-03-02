@@ -14,8 +14,6 @@ class Player {
     }
 
     move(direction) {
-        this.currentTile = this.game.level.getTileByCoordinates(this.x, this.y);
-
         if (direction === MOVEMENT_DIRECTION.left || direction === MOVEMENT_DIRECTION.right) {
             this.rotate(direction);
         }
@@ -33,6 +31,8 @@ class Player {
             this.game.rayCaster.y = this.y;
         }
 
+        this.currentTile = this.game.level.getTileByCoordinates(this.x, this.y);
+
         this.draw();
     }
 
@@ -44,7 +44,7 @@ class Player {
                 ? newRotation
                 : newRotation - 360;
 
-                this.game.rayCaster.rotation = this.rotation;
+            this.game.rayCaster.rotation = this.rotation;
         } else {
             const newRotation = this.rotation - this.rotationSpeed;
             
@@ -62,31 +62,7 @@ class Player {
         console.log(this);
 
         // const projectile = new Projectile(this.x, this.y, this.rotation, 20);
-        
         // PROJECTILES_ARRAY.push(projectile);
-    }
-
-    drawFieldOfView() {
-        const viewStart = calculateCoordinatesAfterRotation(
-            this.rotation - 45,
-            20,
-        );
-
-        const viewEnd = calculateCoordinatesAfterRotation(
-            this.rotation + 45,
-            20,
-        );
-
-        this.ctx.save();
-        this.ctx.translate(this.x, this.y);
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, 0);
-        this.ctx.lineTo(viewStart.x, viewStart.y);
-        this.ctx.moveTo(0, 0);
-        this.ctx.lineTo(viewEnd.x, viewEnd.y);
-        this.ctx.strokeStyle = 'red';
-        this.ctx.stroke();
-        this.ctx.restore();
     }
 
     draw() {      

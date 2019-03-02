@@ -37,7 +37,7 @@ class Ray {
         }
 
         if (this.rotation === 0) {
-            this.draw(ctx, this.currentTile.x + this.currentTile.width, this.y);
+            // this.draw(ctx, this.currentTile.x + this.currentTile.width, this.y);
 
             nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col + 1);
             nextX = nextTile.x;
@@ -50,17 +50,17 @@ class Ray {
             intersectY = this.y + offsetFromTileRight * getAngleTan(this.rotation);
 
             if (intersectX > this.currentTile.x + this.currentTile.width) {
-                this.draw(ctx, this.currentTile.x + this.currentTile.width, intersectY);
+                // this.draw(ctx, this.currentTile.x + this.currentTile.width, intersectY);
                 nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col + 1);
                 nextX = nextTile.x;
                 nextY = intersectY;               
             } else if (intersectX < this.currentTile.x + this.currentTile.width) {
-                this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
+                // this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
                 nextTile = level.getTileByRowCol(this.currentTile.row + 1, this.currentTile.col);
                 nextX = intersectX;
                 nextY = nextTile.y;
             } else {               
-                this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
+                // this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
                 nextTile = level.getTileByRowCol(this.currentTile.row + 1, this.currentTile.col + 1);
                 nextX = nextTile.x;
                 nextY = nextTile.y;
@@ -68,7 +68,7 @@ class Ray {
         }
 
         if (this.rotation === 90) {
-            this.draw(ctx, this.x, this.currentTile.y + this.currentTile.height);
+            // this.draw(ctx, this.x, this.currentTile.y + this.currentTile.height);
 
             nextTile = level.getTileByRowCol(this.currentTile.row + 1, this.currentTile.col);
             nextX = this.x;
@@ -81,17 +81,17 @@ class Ray {
             intersectY = this.y + offsetFromTileLeft * getAngleTan(180 - this.rotation);
 
             if (intersectX < this.currentTile.x) {
-                this.draw(ctx, this.currentTile.x, intersectY);
+                // this.draw(ctx, this.currentTile.x, intersectY);
                 nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col - 1);
                 nextX = nextTile.x + nextTile.width;
                 nextY = intersectY;
             } else if (intersectX > this.currentTile.x) {
-                this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
+                // this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
                 nextTile = level.getTileByRowCol(this.currentTile.row + 1, this.currentTile.col);
                 nextX = intersectX;
                 nextY = nextTile.y;
             } else {
-                this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
+                // this.draw(ctx, intersectX, this.currentTile.y + this.currentTile.height);
                 nextTile = level.getTileByRowCol(this.currentTile.row + 1, this.currentTile.col - 1);
                 nextX = intersectX;
                 nextY = intersectY;
@@ -99,10 +99,10 @@ class Ray {
         }
 
         if (this.rotation === 180) {
-            this.draw(ctx, this.currentTile.x, this.y);
+            // this.draw(ctx, this.currentTile.x, this.y);
 
             nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col - 1);
-            nextX = nextTile.x;
+            nextX = nextTile.x + nextTile.width;
             nextY = this.y;
         }
 
@@ -114,17 +114,17 @@ class Ray {
             intersectY = this.y - offsetFromTileLeft / getAngleTan(offsetRotation);
 
             if (intersectX < this.currentTile.x) {
-                this.draw(ctx, this.currentTile.x, intersectY);
+                // this.draw(ctx, this.currentTile.x, intersectY);
                 nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col - 1);
                 nextX = nextTile.x + nextTile.width;
                 nextY = intersectY;
             } else if (intersectX > this.currentTile.x) {
-                this.draw(ctx, intersectX, this.currentTile.y);
+                // this.draw(ctx, intersectX, this.currentTile.y);
                 nextTile = level.getTileByRowCol(this.currentTile.row - 1, this.currentTile.col);
                 nextX = intersectX;
                 nextY = nextTile.y + nextTile.height;
             } else {
-                this.draw(ctx, intersectX, this.currentTile.y);
+                // this.draw(ctx, intersectX, this.currentTile.y);
                 nextTile = level.getTileByRowCol(this.currentTile.row - 1, this.currentTile.col - 1);
                 nextX = intersectX;
                 nextY = intersectY;
@@ -132,11 +132,11 @@ class Ray {
         }
 
         if (this.rotation === 270) {
-            this.draw(ctx, this.x, this.currentTile.y);
+            // this.draw(ctx, this.x, this.currentTile.y);
 
             nextTile = level.getTileByRowCol(this.currentTile.row - 1, this.currentTile.col);
             nextX = this.x;
-            nextY = nextTile.y;
+            nextY = nextTile.y + nextTile.height;
         }
 
         // TOP RIGHT
@@ -147,17 +147,17 @@ class Ray {
             intersectY = this.y - offsetFromTileRight / getAngleTan(offsetRotation);
 
             if (intersectX > this.currentTile.x + this.currentTile.width) {
-                this.draw(ctx, this.currentTile.x + this.currentTile.width, intersectY);
+                // this.draw(ctx, this.currentTile.x + this.currentTile.width, intersectY);
                 nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col + 1);
                 nextX = nextTile.x;
                 nextY = intersectY;
             } else if (intersectX < this.currentTile.x + this.currentTile.width) {
-                this.draw(ctx, intersectX, this.currentTile.y);
+                // this.draw(ctx, intersectX, this.currentTile.y);
                 nextTile = level.getTileByRowCol(this.currentTile.row - 1, this.currentTile.col);
-                nextX = nextTile.x + nextTile.width;
-                nextY = intersectY;
+                nextX = intersectX;
+                nextY = nextTile.y + nextTile.height;
             } else {
-                this.draw(ctx, intersectX, this.currentTile.y);
+                // this.draw(ctx, intersectX, this.currentTile.y);
                 nextTile = level.getTileByRowCol(this.currentTile.row - 1, this.currentTile.col + 1);
                 nextX = intersectX;
                 nextY = intersectY;

@@ -5,8 +5,7 @@ function updateDebugger() {
             Y: ${this.y}
             Rotation: ${this.rotation}
             TileX: (${this.currentTile.x}, ${this.currentTile.x + this.currentTile.width})
-            TileY: (${this.currentTile.y}, ${this.currentTile.x + this.currentTile.height})
-            nextTile: (${this.nextTile})`;
+            TileY: (${this.currentTile.y}, ${this.currentTile.x + this.currentTile.height})`;
 }
 
 function getRadiansFromAngle(angle) {

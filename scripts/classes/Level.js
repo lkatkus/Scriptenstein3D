@@ -3,7 +3,7 @@ const LEVEL_LAYOUT = [
     [1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -28,16 +28,15 @@ class Level {
             layoutRow.forEach((tile) => {
                 this.ctx.fillStyle = tile.type;
                 this.ctx.fillRect(tile.x, tile.y, tile.width, tile.height);
-                this.ctx.strokeStyle = 'black';
                 this.ctx.strokeRect(tile.x, tile.y, tile.width, tile.height);
-                this.ctx.stroke();
+                this.ctx.closePath();
             })
         });
     }
 
     getTileByCoordinates(x, y) {
-        const row = Math.floor(x / TILE_SIZE);
-        const col = Math.floor(y / TILE_SIZE);
+        const row = Math.floor(y / TILE_SIZE);
+        const col = Math.floor(x / TILE_SIZE);
 
         return this.tileContainer[row][col];
     }

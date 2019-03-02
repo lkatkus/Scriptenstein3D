@@ -40,8 +40,7 @@ class Game {
     mainDraw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.level.draw();
-        this.player.draw();
         this.rayCaster.draw();
-        this.player.drawFieldOfView();
+        this.player.draw();
     };
 }

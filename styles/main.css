@@ -26,3 +26,7 @@ html, body{
 #canvas-map {
     background-color: pink;
 }
+
+#canvas-3d {
+    background-color: #7fa5a5;
+}

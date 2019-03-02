@@ -15,6 +15,7 @@ class Game {
         this.setupControls = this.setupControls.bind(this);
 
         setInterval(this.mainDraw, 1000 / 30);
+        // setInterval(this.mainDraw, 5000);
     }
 
     setupCanvas() {

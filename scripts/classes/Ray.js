@@ -158,7 +158,7 @@ class Ray {
             let dx;
             let dy;
 
-            if (this.rotation === 0) {
+            if (this.rotation === 0 || this.rotation === 360) {
                 rayLength = this.collisionX - this.originX;
             }
 

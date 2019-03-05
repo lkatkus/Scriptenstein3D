@@ -30,6 +30,8 @@ class RayCaster {
             rotation,
         } = this;
 
+        // this.raysContainer.push(new Ray(x, y, rotation, 0))
+
         for(let i = this.fieldOfView / 2; i > 0; i -= 0.5) {
             this.raysContainer.push(new Ray(x, y, rotation, -i))
         }

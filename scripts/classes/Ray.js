@@ -154,6 +154,24 @@ class Ray {
             this.collisionX = nextX;
             this.collisionY = nextY;
 
+            // GET TILE LOCATION
+            // TODO move to util
+            if (nextX  === nextTile.x) {
+                this.collisionPlane = 'left';
+                this.collisionPoint = nextY - nextTile.y;
+            } else if (nextX  === nextTile.x + nextTile.width) {
+                this.collisionPlane = 'right';
+                this.collisionPoint = nextTile.y + nextTile.height - nextY;
+            } else if (nextX > nextTile.x && nextX < nextTile.x + nextTile.width) {
+                if (nextY === nextTile.y) {
+                    this.collisionPlane = 'top';
+                } else {
+                    this.collisionPlane = 'bottom';
+                }
+
+                this.collisionPoint = nextX - nextTile.x;
+            }
+
             let rayLength;
             let dx;
             let dy;

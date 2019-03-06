@@ -158,18 +158,18 @@ class Ray {
             // TODO move to util
             if (nextX  === nextTile.x) {
                 this.collisionPlane = 'left';
-                this.collisionPoint = nextY - nextTile.y;
+                this.collisionPoint = (nextY - nextTile.y) * 100 / 70;
             } else if (nextX  === nextTile.x + nextTile.width) {
                 this.collisionPlane = 'right';
-                this.collisionPoint = nextTile.y + nextTile.height - nextY;
+                this.collisionPoint = (nextTile.y + nextTile.height - nextY) * 100 / 70;
             } else if (nextX > nextTile.x && nextX < nextTile.x + nextTile.width) {
-                if (nextY === nextTile.y) {
+                if (nextY === nextTile.y + nextTile.height) {
                     this.collisionPlane = 'top';
+                    this.collisionPoint = (nextX - nextTile.x) * 100 / 70;
                 } else {
                     this.collisionPlane = 'bottom';
+                    this.collisionPoint = (nextTile.x + nextTile.width - nextX) * 100 / 70;
                 }
-
-                this.collisionPoint = nextX - nextTile.x;
             }
 
             let rayLength;

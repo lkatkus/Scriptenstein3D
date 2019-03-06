@@ -76,23 +76,37 @@ class RayCaster {
     }
 
     draw3d() {
-        const colRes = this.canvas3d.width / 160;
+        const colRes = Math.floor(this.canvas3d.width / 160);
         this.ctx3d.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let wallTexture = new Image();
+        wallTexture.src = 'img/wall.jpg';
+
+        this.ctx3d.fillRect(
+            0,
+            this.canvas3d.height / 3 * 2,
+            this.canvas3d.width,
+            this.canvas3d.height / 3 * 2,
+        );
 
         this.raysContainer.forEach((ray, i) => {
-            const colorOffset = Math.floor(ray.rayDrawDistance / 5);
             const rayDrawHeight = - 20000 / ray.rayDrawDistance;
 
-            this.ctx3d.fillStyle = `rgba(${colorOffset}, 0, 0, 1)`;
+            this.ctx3d.fillStyle = `#606060`;
             this.ctx3d.save();
             this.ctx3d.translate(colRes * i, this.canvas3d.height / 3 * 2);
-            this.ctx3d.fillRect(
+            this.ctx3d.drawImage(
+                wallTexture,
+                564 / 100 * ray.collisionPoint,
+                0,
+                colRes,
+                564,
                 0,
                 - rayDrawHeight / 3,
                 colRes,
-                rayDrawHeight,
+                rayDrawHeight
             );
             this.ctx3d.restore();
         });
+
     }
 }

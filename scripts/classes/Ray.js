@@ -16,6 +16,78 @@ class Ray {
         ctx.restore();
     }
 
+    normalizeRayRotation() {
+        if (this.rotation > 360) {
+            this.rotation = this.rotation - 360;
+        }
+
+        if (this.rotation < 0) {
+            this.rotation = this.rotation + 360;
+        }
+    }
+
+    setCollisionPoint(nextTile) {
+        if (this.collisionX  === nextTile.x) {
+            // Left
+            this.collisionPoint = (this.collisionY - nextTile.y) * 100 / TILE_SIZE;
+        } else if (this.collisionX  === nextTile.x + nextTile.width) {
+            // Right
+            this.collisionPoint = (nextTile.y + nextTile.height - this.collisionY) * 100 / TILE_SIZE;
+        } else if (this.collisionX > nextTile.x && this.collisionX < nextTile.x + nextTile.width) {
+            if (this.collisionY === nextTile.y + nextTile.height) {
+                // Top
+                this.collisionPoint = (this.collisionX - nextTile.x) * 100 / TILE_SIZE;
+            } else {
+                // Bottom
+                this.collisionPoint = (nextTile.x + nextTile.width - this.collisionX) * 100 / TILE_SIZE;
+            }
+        }
+    }
+
+    setRayDrawDistance() {
+        let dx;
+        let dy;
+        let rayLength;
+
+        if (this.rotation === 0 || this.rotation === 360) {
+            rayLength = this.collisionX - this.originX;
+        }
+
+        if (this.rotation > 0 && this.rotation < 90) {
+            dy = this.collisionY - this.originY;
+            rayLength = dy / Math.sin(getRadiansFromAngle(this.rotation));
+        }
+
+        if (this.rotation === 90) {
+            rayLength = this.collisionY - this.originY;
+        }
+
+        if (this.rotation > 90 && this.rotation < 180) {
+            dx = this.originX - this.collisionX;
+            rayLength = dx / Math.sin(getRadiansFromAngle(this.rotation - 90));
+        }
+
+        if (this.rotation === 180) {
+            rayLength = this.originX - this.collisionX;
+        }
+        
+        if (this.rotation > 180 && this.rotation < 270) {
+            dy = this.originY - this.collisionY;
+            rayLength = dy / Math.sin(getRadiansFromAngle(this.rotation - 180));
+        }
+
+        if (this.rotation === 270) {
+            rayLength = this.originY - this.collisionY;
+        }
+        
+        if (this.rotation > 270 && this.rotation < 360) {
+            dy = this.originY - this.collisionY;
+            rayLength = dy / Math.sin(getRadiansFromAngle(360 - this.rotation));
+        }
+
+        this.rayDrawDistance = Math.cos(getRadiansFromAngle(this.offset)) * rayLength;
+    }
+
     cast(ctx, level, tile) {
         this.currentTile = tile;
 
@@ -28,15 +100,9 @@ class Ray {
         let intersectY;
         let nextTile;
         let nextX;
-        let nextY;
+        let nextY;        
 
-        if (this.rotation > 360) {
-            this.rotation = this.rotation - 360;
-        }
-
-        if (this.rotation < 0) {
-            this.rotation = this.rotation + 360;
-        }
+        this.normalizeRayRotation();
 
         if (this.rotation === 0 || this.rotation === 360) {
             nextTile = level.getTileByRowCol(this.currentTile.row, this.currentTile.col + 1);
@@ -154,65 +220,8 @@ class Ray {
             this.collisionX = nextX;
             this.collisionY = nextY;
 
-            // GET TILE LOCATION
-            // TODO move to util
-            if (nextX  === nextTile.x) {
-                this.collisionPlane = 'left';
-                this.collisionPoint = (nextY - nextTile.y) * 100 / 70;
-            } else if (nextX  === nextTile.x + nextTile.width) {
-                this.collisionPlane = 'right';
-                this.collisionPoint = (nextTile.y + nextTile.height - nextY) * 100 / 70;
-            } else if (nextX > nextTile.x && nextX < nextTile.x + nextTile.width) {
-                if (nextY === nextTile.y + nextTile.height) {
-                    this.collisionPlane = 'top';
-                    this.collisionPoint = (nextX - nextTile.x) * 100 / 70;
-                } else {
-                    this.collisionPlane = 'bottom';
-                    this.collisionPoint = (nextTile.x + nextTile.width - nextX) * 100 / 70;
-                }
-            }
-
-            let rayLength;
-            let dx;
-            let dy;
-
-            if (this.rotation === 0 || this.rotation === 360) {
-                rayLength = this.collisionX - this.originX;
-            }
-
-            if (this.rotation > 0 && this.rotation < 90) {
-                dy = this.collisionY - this.originY;
-                rayLength = dy / Math.sin(getRadiansFromAngle(this.rotation));
-            }
-
-            if (this.rotation === 90) {
-                rayLength = this.collisionY - this.originY;
-            }
-
-            if (this.rotation > 90 && this.rotation < 180) {
-                dx = this.originX - this.collisionX;
-                rayLength = dx / Math.sin(getRadiansFromAngle(this.rotation - 90));
-            }
-
-            if (this.rotation === 180) {
-                rayLength = this.originX - this.collisionX;
-            }
-            
-            if (this.rotation > 180 && this.rotation < 270) {
-                dy = this.originY - this.collisionY;
-                rayLength = dy / Math.sin(getRadiansFromAngle(this.rotation - 180));
-            }
-
-            if (this.rotation === 270) {
-                rayLength = this.originY - this.collisionY;
-            }
-            
-            if (this.rotation > 270 && this.rotation < 360) {
-                dy = this.originY - this.collisionY;
-                rayLength = dy / Math.sin(getRadiansFromAngle(360 - this.rotation));
-            }
-
-            this.rayDrawDistance = Math.cos(getRadiansFromAngle(this.offset)) * rayLength;
+            this.setCollisionPoint(nextTile);
+            this.setRayDrawDistance();
         }
     }
 }

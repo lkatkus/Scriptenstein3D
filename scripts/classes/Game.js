@@ -1,6 +1,3 @@
-const PLAYER_SPAWN_X = 315;
-const PLAYER_SPAWN_Y = 315;
-
 class Game {
     constructor () {
         this.setupCanvas();
@@ -14,7 +11,7 @@ class Game {
         this.setupCanvas = this.setupCanvas.bind(this);
         this.setupControls = this.setupControls.bind(this);
 
-        setInterval(this.mainDraw, 1000 / 30);
+        setInterval(this.mainDraw, FPS);
         // setInterval(this.mainDraw, 5000);
     }
 

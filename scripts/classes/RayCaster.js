@@ -96,10 +96,10 @@ class RayCaster {
             this.ctx3d.translate(colRes * i, this.canvas3d.height / 3 * 2);
             this.ctx3d.drawImage(
                 wallTexture,
-                564 / 100 * ray.collisionPoint,
+                TILE_TEXTURE_SIZE / 100 * ray.collisionPoint,
                 0,
                 colRes,
-                564,
+                TILE_TEXTURE_SIZE,
                 0,
                 - rayDrawHeight / 3,
                 colRes,

@@ -1,5 +1,3 @@
-const TILE_SIZE = 70;
-
 class LevelTile {
     constructor(row, col, type) {
         this.x = col * TILE_SIZE;

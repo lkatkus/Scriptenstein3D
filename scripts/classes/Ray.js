@@ -27,6 +27,8 @@ class Ray {
     }
 
     setCollisionPoint(nextTile) {
+        this.collisionTile = nextTile;
+
         if (this.collisionX  === nextTile.x) {
             // Left
             this.collisionPoint = (this.collisionY - nextTile.y) * 100 / TILE_SIZE;

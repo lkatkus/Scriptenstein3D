@@ -11,7 +11,6 @@ class RayCaster {
         this.raysContainer = [];
 
         this.setInitialRays();
-
         this.setup3dCanvas();
     }
 
@@ -78,24 +77,14 @@ class RayCaster {
     draw3d() {
         const colRes = Math.floor(this.canvas3d.width / 160);
         this.ctx3d.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        let wallTexture = new Image();
-        wallTexture.src = 'img/wall.jpg';
-
-        this.ctx3d.fillRect(
-            0,
-            this.canvas3d.height / 3 * 2,
-            this.canvas3d.width,
-            this.canvas3d.height / 3 * 2,
-        );
 
         this.raysContainer.forEach((ray, i) => {
             const rayDrawHeight = - 20000 / ray.rayDrawDistance;
 
-            this.ctx3d.fillStyle = `#606060`;
             this.ctx3d.save();
             this.ctx3d.translate(colRes * i, this.canvas3d.height / 3 * 2);
             this.ctx3d.drawImage(
-                wallTexture,
+                ray.collisionTile.texture,
                 TILE_TEXTURE_SIZE / 100 * ray.collisionPoint,
                 0,
                 colRes,
@@ -107,6 +96,5 @@ class RayCaster {
             );
             this.ctx3d.restore();
         });
-
     }
 }

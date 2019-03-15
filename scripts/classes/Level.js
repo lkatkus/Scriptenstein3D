@@ -2,10 +2,16 @@ class Level {
     constructor(canvas, canvasContext) {
         this.canvas = canvas;
         this.ctx = canvasContext;
+        this.textureManager = new TextureManager();
 
         this.tileContainer = LEVEL_LAYOUT.map((layoutRow, row) => {
             return layoutRow.map((type, col) => {
-                return new LevelTile(row, col, type)
+                return new LevelTile(
+                    row,
+                    col,
+                    this.textureManager.getColorById(type),
+                    this.textureManager.getTextureById(type),
+                )
             })
         });
     }

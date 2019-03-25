@@ -1,3 +1,18 @@
+import Level from './Level';
+import Player from './Player';
+import RayCaster from './RayCaster';
+
+import {
+    FPS,
+    LEVEL_LAYOUT,
+    TILE_SIZE,
+    SHOOTING_KEY_CODES,
+    MOVEMENT_KEYS,
+    MOVEMENT_KEY_CODES,
+    PLAYER_SPAWN_X,
+    PLAYER_SPAWN_Y,
+} from './../constants';
+
 class Game {
     constructor () {
         this.setupCanvas();
@@ -12,7 +27,7 @@ class Game {
         this.setupControls = this.setupControls.bind(this);
 
         setInterval(this.mainDraw, FPS);
-        // setInterval(this.mainDraw, 5000);
+        // setInterval(this.mainDraw, 1000);
     }
 
     setupCanvas() {
@@ -42,3 +57,5 @@ class Game {
         this.player.draw();
     };
 }
+
+export default Game;

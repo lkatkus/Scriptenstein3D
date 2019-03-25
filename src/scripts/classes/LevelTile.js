@@ -1,3 +1,7 @@
+import {
+    TILE_SIZE,
+} from './../constants';
+
 class LevelTile {
     constructor(row, col, color, texture) {
         this.x = col * TILE_SIZE;
@@ -10,3 +14,5 @@ class LevelTile {
         this.height = TILE_SIZE;
     }
 }
+
+export default LevelTile;

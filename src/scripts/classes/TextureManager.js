@@ -1,11 +1,13 @@
+import Texture from './../../images/wall.jpg';
+
 const TEXTURES = {
     0: {
         color: 'green',
-        src: 'img/wall.jpg',
+        src: Texture,
     },
     1: {
         color: 'grey',
-        src: 'img/wall.jpg',
+        src: Texture,
     },
 }
 
@@ -27,3 +29,5 @@ class TextureManager {
         return this.textures[id];
     }
 }
+
+export default TextureManager;

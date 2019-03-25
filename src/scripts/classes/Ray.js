@@ -1,3 +1,12 @@
+import {
+    getAngleTan,
+    getRadiansFromAngle,
+} from './../utils';
+
+import {
+    TILE_SIZE,
+} from './../constants';
+
 class Ray {
     constructor(originX, originY, rotation, offset) {
         this.originX = originX;
@@ -227,3 +236,5 @@ class Ray {
         }
     }
 }
+
+export default Ray;

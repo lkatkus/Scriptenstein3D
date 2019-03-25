@@ -1,3 +1,11 @@
+import {
+    calculateCoordinatesAfterRotation,
+} from './../utils';
+
+import {
+    MOVEMENT_DIRECTION,
+} from './../constants';
+
 class Player {
     constructor(game, canvas, canvasContext, x, y) {
         this.game = game;
@@ -87,6 +95,8 @@ class Player {
         //     })
         // }
 
-        updateDebugger.call(this);
+        // updateDebugger.call(this);
     }
 };
+
+export default Player;

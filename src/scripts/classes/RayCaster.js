@@ -1,3 +1,9 @@
+import Ray from './Ray';
+
+import {
+    TILE_TEXTURE_SIZE,
+} from './../constants';
+
 class RayCaster {
     constructor(canvas, canvasContext, x, y, rotation, level, fieldOfView) {
         this.canvas = canvas;
@@ -98,3 +104,5 @@ class RayCaster {
         });
     }
 }
+
+export default RayCaster;

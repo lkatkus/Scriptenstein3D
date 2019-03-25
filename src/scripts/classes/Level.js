@@ -1,3 +1,11 @@
+import TextureManager from './TextureManager';
+import LevelTile from './LevelTile';
+
+import {
+    LEVEL_LAYOUT,
+    TILE_SIZE,
+} from './../constants';
+
 class Level {   
     constructor(canvas, canvasContext) {
         this.canvas = canvas;
@@ -38,3 +46,5 @@ class Level {
         return this.tileContainer[row][col];
     }
 }
+
+export default Level;

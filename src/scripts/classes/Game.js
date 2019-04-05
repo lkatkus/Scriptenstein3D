@@ -39,13 +39,17 @@ class Game {
     }
 
     setupControls() {
-        document.addEventListener('keydown', () => {
+        document.addEventListener('keydown', (event) => {
             if (SHOOTING_KEY_CODES.includes(event.keyCode)) {
                 this.player.shoot();
             }
 
             if (MOVEMENT_KEY_CODES.includes(event.keyCode)) {
-                this.player.move(MOVEMENT_KEYS[event.key]);
+                if (event.key.includes('Arrow')) {
+                    return this.player.move(MOVEMENT_KEYS[event.key]);
+                }
+                
+                this.player.move(MOVEMENT_KEYS[`Arrow${event.key}`]);
             }
         });
     }

@@ -1,7 +1,7 @@
 {
   "name": "WJS",
   "version": "1.0.0",
-  "description": "",
+  "description": "Raycasting engine with Javascript",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/lkatkus/Scriptenstein3D.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Laimonas Katkus",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lkatkus/Scriptenstein3D/issues"
@@ -31,5 +31,8 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.3"
   }
 }

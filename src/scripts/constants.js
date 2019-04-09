@@ -1,10 +1,10 @@
 export const FPS = 1000 / 30;
 
-export const PLAYER_SPAWN_X = 315;
-export const PLAYER_SPAWN_Y = 315;
-
-export const TILE_SIZE = 70;
+export const TILE_SIZE = 30;
 export const TILE_TEXTURE_SIZE = 564;
+
+export const PLAYER_SPAWN_X = TILE_SIZE * 5;
+export const PLAYER_SPAWN_Y = TILE_SIZE * 5;
 
 export const LEVEL_LAYOUT = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

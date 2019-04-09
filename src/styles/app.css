@@ -24,7 +24,9 @@ html, body{
 }
 
 #canvas-map {
-    background-color: pink;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #canvas-3d {

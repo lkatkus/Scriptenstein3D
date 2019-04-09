@@ -24,8 +24,8 @@ class RayCaster {
         this.canvas3d = document.getElementById('canvas-3d');
         this.ctx3d = this.canvas3d.getContext('2d');
 
-        this.canvas3d.width = 480;
-        this.canvas3d.height = 320;
+        this.canvas3d.width = window.innerWidth;
+        this.canvas3d.height = window.innerHeight;
     }
 
     setInitialRays() {
@@ -37,11 +37,11 @@ class RayCaster {
 
         // this.raysContainer.push(new Ray(x, y, rotation, 0))
 
-        for(let i = this.fieldOfView / 2; i > 0; i -= 0.5) {
+        for(let i = this.fieldOfView / 2; i > 0; i -= 0.125) {
             this.raysContainer.push(new Ray(x, y, rotation, -i))
         }
 
-        for(let i = 0; i < this.fieldOfView / 2; i += 0.5) {
+        for(let i = 0; i < this.fieldOfView / 2; i += 0.125) {
             this.raysContainer.push(new Ray(x, y, rotation, i))
         }
     }
@@ -81,11 +81,11 @@ class RayCaster {
     }
 
     draw3d() {
-        const colRes = Math.floor(this.canvas3d.width / 160);
-        this.ctx3d.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const colRes = Math.floor(this.canvas3d.width / this.raysContainer.length);
+        this.ctx3d.clearRect(0, 0, this.canvas3d.width, this.canvas3d.height);
 
         this.raysContainer.forEach((ray, i) => {
-            const rayDrawHeight = - 20000 / ray.rayDrawDistance;
+            const rayDrawHeight = 30000 / ray.rayDrawDistance;
 
             this.ctx3d.save();
             this.ctx3d.translate(colRes * i, this.canvas3d.height / 3 * 2);
@@ -96,9 +96,9 @@ class RayCaster {
                 colRes,
                 TILE_TEXTURE_SIZE,
                 0,
-                - rayDrawHeight / 3,
+                rayDrawHeight / 3,
                 colRes,
-                rayDrawHeight
+                 - rayDrawHeight
             );
             this.ctx3d.restore();
         });
